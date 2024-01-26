@@ -1,0 +1,180 @@
+/* Custom CSS for gradient transition */
+@keyframes gradientTransition {
+  0% {
+    transform: scaleY(1);
+    background-position: 0% 50%;
+  }
+
+  50% {
+    transform: scaleY(1.1);
+    background-position: 100% 50%;
+  }
+
+  100% {
+    transform: scaleY(1);
+    background-position: 0% 50%;
+  }
+}
+
+/* Apply gradient and transition */
+.bg-gradient {
+  /* background: linear-gradient(90deg, #f37aad, #f57e80, #f37aad, #649bff , #867efa ,#faa9cb,#fbb4df); */
+  /* background: linear-gradient(45deg , #020024 , #090979,#00d4ff); */
+  /* background: linear-gradient(45deg , #22c1c3,#fdbb2d); */
+  /* background: linear-gradient(45deg , #3f5efb,#fc466b); */
+  /* background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%); */
+  /* background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%); */
+  /* background: radial-gradient(circle, #42047e 0%, #07f49e 100%); */
+  /* background: radial-gradient(circle, #e9d022 0%, #e60b09 100%); */
+  /* background: radial-gradient(circle, #E0D2C7 0%, #44B09E 100%); */
+  background: linear-gradient(70deg,
+      hsl(359deg 52% 69%) 0%,
+      hsl(13deg 75% 74%) 12%,
+      hsl(26deg 94% 77%) 23%,
+      hsl(55deg 56% 74%) 34%,
+      hsl(136deg 75% 84%) 45%,
+      hsl(181deg 80% 67%) 56%,
+      hsl(196deg 100% 50%) 67%,
+      hsl(230deg 89% 71%) 78%,
+      hsl(285deg 51% 69%) 89%,
+      hsl(329deg 57% 74%) 100%);
+  background-size: 200% 100%;
+  animation: gradientTransition 15s infinite;
+  height: 40%;
+  border-radius: 0 0 30% 30%;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  background-blend-mode: overlay;
+  filter: contrast((50%));
+
+}
+.bg-gradient1 {
+  /* background: linear-gradient(90deg, #f37aad, #f57e80, #f37aad, #649bff , #867efa ,#faa9cb,#fbb4df); */
+  /* background: linear-gradient(45deg , #020024 , #090979,#00d4ff); */
+  /* background: linear-gradient(45deg , #22c1c3,#fdbb2d); */
+  /* background: linear-gradient(45deg , #3f5efb,#fc466b); */
+  /* background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%); */
+  /* background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%); */
+  /* background: radial-gradient(circle, #42047e 0%, #07f49e 100%); */
+  /* background: radial-gradient(circle, #e9d022 0%, #e60b09 100%); */
+  /* background: radial-gradient(circle, #E0D2C7 0%, #44B09E 100%); */
+  background: linear-gradient(70deg,
+      hsl(359deg 52% 69%) 0%,
+      hsl(13deg 75% 74%) 12%,
+      hsl(26deg 94% 77%) 23%,
+      hsl(55deg 56% 74%) 34%,
+      hsl(136deg 75% 84%) 45%,
+      hsl(181deg 80% 67%) 56%,
+      hsl(196deg 100% 50%) 67%,
+      hsl(230deg 89% 71%) 78%,
+      hsl(285deg 51% 69%) 89%,
+      hsl(329deg 57% 74%) 100%);
+  background-size: 200% 100%;
+  animation: gradientTransition 15s infinite;
+  height: 40%;
+  border-radius: 30% 30% 0  0;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  background-blend-mode: overlay;
+  filter: contrast((50%));
+
+}
+
+.ball {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(45deg, #f37aad, #f57e80, #f37aad, #649bff, #867efa, #faa9cb, #fbb4df);
+  background-size: 200% 100%;
+  border-radius: 50%;
+  animation: moveBall 8s infinite alternate;
+}
+
+@keyframes moveBall {
+  to {
+    transform: translate(calc(70vw - 100px),
+        calc(100vh - 100px));
+  }
+}
+
+.overlay {
+  background: rgba(78, 78, 78, 0);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 10px;
+
+}
+
+/* AnimatedText.css */
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.card {
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  background-color: #000000;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  box-shadow: 0 8px 32px 0 #f37aad;
+  animation: changeColor 15s infinite;
+}
+.maincard{
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  background-color: #2b2b2b;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+
+}
+
+@keyframes changeColor {
+  0% {
+    
+    box-shadow: 0 8px 32px 0 #f37aad;
+  }
+  50% {
+    box-shadow: 0 15px 60px 0 #649bff;
+  }
+  60% {
+    box-shadow: 0 12px 40px 0 #867efa;
+  }
+  70% {
+    box-shadow: 0 10px 30px 0 #faa9cb;
+  }
+  100% {
+    box-shadow: 0 8px 32px 0 #faa9cb;
+  }
+}
+
+
+.bg-gradient-animation { 
+  background: linear-gradient(70deg,
+  hsl(359deg 52% 69%) 0%,
+  hsl(13deg 75% 74%) 12%,
+  hsl(26deg 94% 77%) 23%,
+  hsl(55deg 56% 74%) 34%,
+  hsl(136deg 75% 84%) 45%,
+  hsl(181deg 80% 67%) 56%,
+  hsl(196deg 100% 50%) 67%,
+  hsl(230deg 89% 71%) 78%,
+  hsl(285deg 51% 69%) 89%,
+  hsl(329deg 57% 74%) 100%);
+background-size: 200% 100%;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+  animation: gradientAnimation 7s infinite;
+}
+
