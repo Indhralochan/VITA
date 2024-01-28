@@ -6,49 +6,26 @@ import './style.css';
 import {Button} from '../components/ui/button';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Footer from '@/components/Footer';
+import { useRouter } from 'next/navigation'
 const Page = () => {
-  // const [backgroundColor, setBackgroundColor] = useState('#22c1c3'); // Initial color
-
-  // useEffect(() => {
-  //   const updateBackgroundColor = () => {
-  //     const bgElement = document.querySelector('.bg-gradient');
-  //     console.log(bgElement);
-  //     if (bgElement) {
-  //       const bgColor = getComputedStyle(bgElement).backgroundColor;
-  //       setBackgroundColor(bgColor);
-  //       console.log(bgColor);
-  //     }
-  //   };
-
-  //   const colorInterval = setInterval(updateBackgroundColor, 5000); // Adjust the interval as needed
-
-  //   // Cleanup interval on component unmount
-  //   return () => clearInterval(colorInterval);
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log(backgroundColor);
-  // }, [backgroundColor]);
-
+  const router = useRouter()
   return (
     <ScrollArea>
-    <div className="relative h-screen overlay">
-      <div className="w-full h-full flex items-center justify-center relative bg-gradient blur-3xl">
-        <div className="text-start text-4xl text-white z-10 pb-20 font-semibold">
-          {/* Your text or content here */}
+    <div className="relative h-screen overlay text-muted-foreground">
+    <div className="w-full h-screen flex flex-col">
+          <Navbar nav={false}/>
+          <div className="w-full h-full flex items-center justify-center relative bg-gradient blur-3xl ">
+            <div className="text-start text-4xl text-white z-10 pb-5 font-semibold">
         </div>
       </div>
 
       {/* Navbar */}
-      <div className="top-0 fixed w-full z-20">
-        <Navbar />
-      </div>
 
       {/* Content */}
-      <div className="flex flex-col relative items-center text-center justify-center mt-[-3rem]">
-        <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full   bg-slate-900 px-7 py-2  backdrop-blur transition-all">
+      <div className="flex flex-col relative items-center text-center justify-center  ">
+        <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full bg-slate-900 px-7 py-2  backdrop-blur transition-all">
           <p className="text-sm font-semibold text-white">
-            Zues is now public!
+            Vita is now public!
           </p>
         </div>
         <div className="flex items-center justify-center">
@@ -77,7 +54,7 @@ const Page = () => {
         </p>
         <div className="flex flex-row py-5 px-10">
           <div className="px-10">
-        <Button variant="secondary" className='text-center py-5'>
+        <Button variant="secondary" className='text-center py-5' onClick={()=>{router.push('/register')}}>
           Get Started
         </Button>
         </div>
@@ -93,6 +70,7 @@ const Page = () => {
       <footer className='w-full'>
       <Footer/>
       </footer>
+    </div>
     </div>
     </ScrollArea>
   );

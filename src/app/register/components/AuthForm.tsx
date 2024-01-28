@@ -103,9 +103,16 @@ const handleInputChangePass = (value: string) => {
         console.log("password",password);
     }, [email,password])
 
+    const styles = {
+        border: "1px solid rgba(255, 255, 255, 0.20)",
+        backgroundColor: "rgba(255, 255, 255, 0.06)",
+        backdropFilter: "blur(86px)",
+        overflow: "hidden",
+      };
+
     return (
         <>  
-            <div className="border border-lg p-10 rounded rounded-lg card">
+            <div className="p-10 rounded rounded-lg card" style={styles}>
                 <div className={cn("grid gap-6", className)} {...props}>
                     <div className="flex flex-col space-y-2 text-center">
                         <h1 className="text-2xl font-semibold tracking-tight">
@@ -209,7 +216,7 @@ const handleInputChangePass = (value: string) => {
                 </div>
                 <div className="flex flex-col justify-center align-center mx-auto py-3">
                     <p className="justify-center text-center">Already a user?</p>
-                    <Button className="px-5" variant="outline" type="button" disabled={isLoading} onClick={()=>{router.push('/register')}}>SignIn</Button>
+                    <Button className="px-5" variant="outline" type="button" disabled={isLoading} onClick={()=>{router.push('/signin')}}>SignIn</Button>
                 </div>
             </div>
             

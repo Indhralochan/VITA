@@ -1,11 +1,11 @@
+"use client";
 import React from "react";
-
 
 export default function Footer() {
   return (
     <div className="flex justify-between ">
 <div className="p-20 h-[25vh] flex flex-col items-start">
-  <p>Scripter.{"  "}@2023</p>
+  <p>VITA.{"  "}@2023</p>
   <div className="text-sm mt-5">
     <p>Have some queries? Feel free to write it down here.</p>
     <a className="text-blue-500"

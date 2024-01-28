@@ -49,6 +49,7 @@ export function AuthForm({ className, ...props }: AuthFormProps) {
             });
     }
     const handleGithubAuth = () => {
+        
         const auth = getAuth();
         const provider = new GithubAuthProvider();
 signInWithPopup(auth, provider)
@@ -96,10 +97,15 @@ const handleInputChangePass = (value: string) => {
             setIsLoading(false)
         }, 3000)
     }
-
+    const styles = {
+        border: "1px solid rgba(255, 255, 255, 0.20)",
+        backgroundColor: "rgba(255, 255, 255, 0.06)",
+        backdropFilter: "blur(86px)",
+        overflow: "hidden",
+      };
     return (
         <>
-            <div className="border border-lg p-10 rounded rounded-lg card">
+            <div className="border border-lg p-10 rounded rounded-lg card" style={styles}>
                 <div className={cn("grid gap-6", className)} {...props}>
                     <div className="flex flex-col space-y-2 text-center">
                         <h1 className="text-2xl font-semibold tracking-tight">

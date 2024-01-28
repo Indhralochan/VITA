@@ -27,7 +27,7 @@ const Dashboard = () => {
     <>
       <div className="w-full h-screen flex flex-col">
         <div className="w-full">
-          <Navbar />
+          <Navbar nav={true}/>
           <div className="w-full h-full flex items-center justify-center relative bg-gradient blur-3xl">
             <div className="text-start text-4xl text-white z-10 pb-5 font-semibold">
               {/* Your text or content here */}
@@ -64,6 +64,11 @@ const Dashboard = () => {
         <div className="w-80% flex flex-col justify-center align-center mx-auto border-gray-300 border-lg pb-20">
           <MainCard/>
         </div>
+        <div className="w-full h-full flex items-center justify-center relative bg-gradient blur-3xl">
+            <div className="text-start text-4xl text-white z-10 pb-5 font-semibold">
+              {/* Your text or content here */}
+            </div>
+          </div>
       </div>
 
     </>
