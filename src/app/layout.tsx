@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { DataContextProvider } from '@/app/context/index';
 import { ThemeProvider } from "@/components/theme-provider"
 
 export default function RootLayout({ children }: RootLayoutProps) {
@@ -15,7 +16,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
             enableSystem
             disableTransitionOnChange
           >
+             <DataContextProvider>
             {children}
+            </DataContextProvider>
           </ThemeProvider>
         </body>
       </html>

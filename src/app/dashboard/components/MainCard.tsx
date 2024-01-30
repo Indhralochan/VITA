@@ -21,15 +21,19 @@ import axios from "axios";
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
-
+import { db } from "../../../../firebase";
+import { useRouter } from 'next/navigation'
+import {  useDataContext } from '@/app/context/index';
 const MainCard = () => {
+    const { url, setUrl, text, setText, summarizedText, setSummarizedText, selectedValues, setSelectedValues, selectedPromptValues, setSelectedPromptValues } = useDataContext();
     const prompts = ["Summarization", "Query Response", "Answer generation"];
     const [link, setLink] = useState("");
     const [selectedValue, setSelectedValue] = useState('');
     const [selectedPrompts, setSelectedPrompts] = useState<boolean[]>(new Array(prompts.length).fill(false));
     const [loading, setLoading] = useState(true);
-    const [fileUrl , SetfileUrl] = useState('');
+    const [fileUrl, SetfileUrl] = useState('');
     const [progress, setProgress] = React.useState(13)
+    const router = useRouter();
     const handleCheckboxChange = (index: number) => {
         const newSelectedPrompts = [...selectedPrompts];
         newSelectedPrompts[index] = !newSelectedPrompts[index];
@@ -38,7 +42,7 @@ const MainCard = () => {
     React.useEffect(() => {
         const timer = setTimeout(() => setProgress(66), 500)
         return () => clearTimeout(timer)
-      }, [])
+    }, [])
 
     const handleSelectAll = () => {
         setSelectedPrompts(new Array(prompts.length).fill(true));
@@ -54,70 +58,99 @@ const MainCard = () => {
     const handleFileChange = (file) => {
         // Check if a file was selected
         if (file) {
-          // Log the file information
-          setLoading(true);
-          console.log('Selected file:', file);
-          
-          // Perform further actions such as uploading the file, processing it, etc.
-          // Example: Upload the file using Axios
-          const formData = new FormData();
-          formData.append('file', file);
+            // Log the file information
+            setLoading(true);
+            console.log('Selected file:', file);
 
-          axios.post('http://localhost:4000/upload', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          })
-          .then((response) => {
-            console.log('File uploaded successfully:', response.data);
-            console.log(response.data.filePath);
-            SetfileUrl(response.data.filePath)
-            setLoading(false);
-          })
-          .catch((error) => {
-            console.error('Error uploading file:', error);
-          });
+            // Perform further actions such as uploading the file, processing it, etc.
+            // Example: Upload the file using Axios
+            const formData = new FormData();
+            formData.append('file', file);
+
+            axios.post('http://localhost:4000/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+                .then((response) => {
+                    console.log('File uploaded successfully:', response.data);
+                    console.log(response.data.filePath);
+                    SetfileUrl(response.data.filePath)
+                    setUrl(response.data.filePath)
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    console.error('Error uploading file:', error);
+                });
         } else {
-          console.log('No file selected.');
+            console.log('No file selected.');
         }
-      };
+    };
 
-      useEffect(() => {
+    useEffect(() => {
         console.log(selectedPrompts);
     }, [selectedPrompts]);
 
-      const handleGenerate = () => {
+    const handleGenerate = () => {
         console.log("Started")
-        console.log(link)
-        console.log(selectedPrompts)
-        console.log(selectedValue)
-            if(link !== '' && selectedPrompts.length !== 0){
-                axios.post('http://localhost:4000/generate', {
-                    "link": link,
-                    "prompt": JSON.stringify(selectedPrompts),
-                    "format": "video"
-                }).then((response) => {
-                    console.log(response.data);
-                }).catch((error) => {
-                    console.log(error);
-                })
-                console.log("Ended")
-            }
-            else if(fileUrl !== '' && selectedPrompts.length !== 0){
-                axios.post('http://localhost:4000/generate', {
-                    "link": fileUrl,
-                    "prompt": JSON.stringify(selectedPrompts),
-                    "format": selectedValue
-                }).then((response) => {
-                    console.log(response.data);
-                }).catch((error) => {
-                    console.log(error);
-                })
-            }
-            else{
-                console.log("Please select a file or enter a link")
-            }
-        }
+        // console.log(link)
+        // console.log(selectedPrompts)
+        // console.log(selectedValue)
+        // if (link !== '' && selectedPrompts.length !== 0) {
+        //     axios.post('http://localhost:4000/generate', {
+        //         "link": link,
+        //         "prompt": JSON.stringify(selectedPrompts),
+        //         "format": "video"
+        //     }).then((response) => {
+        //         console.log(response.data);
+        //         const payload = {
+        //             link: link,
+        //             text: response.data.payload.text
+        //         }
+        //         localStorage.setItem('payload', JSON.stringify(payload))
+        //         setUrl(link)
+        //         setText(response.data.payload.text)
+        //         setSelectedPromptValues(selectedPrompts);
+        //         setSelectedValues(selectedValue);
+        //         console.log(response.data.payload.text)
+        //         console.log(text);
+        //         router.push('/summarize')
+                
+
+        //     }).catch((error) => {
+        //         console.log(error);
+        //     })
+            console.log("Ended")
+            setText("Hello")
+            setUrl("Hello")
+            setSelectedPromptValues(selectedPrompts);
+            setSelectedValues(selectedValue);
+            router.push('/summarize');
+        // }
+        // else if (fileUrl !== '' && selectedPrompts.length !== 0) {
+        //     axios.post('http://localhost:4000/generate', {
+        //         "link": fileUrl,
+        //         "prompt": JSON.stringify(selectedPrompts),
+        //         "format": selectedValue
+        //     }).then((response) => {
+        //         console.log(response.data);
+        //         setUrl(link)
+        //         setText(response.data.text)
+        //         setSelectedPromptValues(selectedPrompts);
+        //         setSelectedValues(selectedValue);
+        //         console.log(response.data.text)
+
+        //         router.push('/summarize')
+
+        //     }).catch((error) => {
+        //         console.log(error);
+        //     })
+        // }
+        // else {
+        //     console.log("Please select a file or enter a link")
+        // }
+    }
+
 
     const styles = {
         border: "1px solid rgba(255, 255, 255, 0.20)",
@@ -162,7 +195,7 @@ const MainCard = () => {
                                                 <div className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</div>
                                                 <div className="text-xs text-gray-500 dark:text-gray-400">mp4,mpeg,mp3 Etc (MAX. 10MB file)</div>
                                             </div>
-                                            <input id="dropzone-file" type="file" className="hidden" onChange={(e) => handleFileChange(e.target.files[0])}/>
+                                            <input id="dropzone-file" type="file" className="hidden" onChange={(e) => handleFileChange(e.target.files[0])} />
                                         </label>
                                     </div>
                                     {/* <div className="mt-1">
@@ -171,7 +204,7 @@ const MainCard = () => {
                                     }
                                     </div> */}
                                 </div>
-                                <Progress className="w-full" value={progress}/>
+                                <Progress className="w-full" value={progress} />
                                 <div className="mx-auto p-6">
                                     <Select onValueChange={(e) => { handleSelectChange(e) }}>
                                         <SelectTrigger className="w-[180px] border-gray-300">
@@ -239,7 +272,7 @@ const MainCard = () => {
                 </CardContent>
                 <CardFooter>
                     <div className="mx-auto">
-                        <Button variant='secondary' className='p-5 px-20 bg-gradient-to-r from-pink-600 via-pink-500 to-indigo-400' onClick={()=>{handleGenerate()}}>Generate</Button>
+                        <Button variant='secondary' className='p-5 px-20 bg-gradient-to-r from-pink-600 via-pink-500 to-indigo-400' onClick={() => { handleGenerate() }}>Generate</Button>
                     </div>
                 </CardFooter>
             </Card>

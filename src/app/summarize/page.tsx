@@ -6,9 +6,15 @@ import Summarization from './components/Summarization';
 import ContextAnswering from './components/ContextAnswering';
 import AnswerGeneration from './components/AnswerGeneration';
 import '@/app/style.css';
-const page = ({ children }) => {
+import { useRouter } from 'next/navigation'
+import {  useDataContext } from '@/app/context/index';
+const page = () => {
+  const {url, 
+    text, 
+    summarizedText, setSummarizedText,
+    selectedValues, 
+    selectedPromptValues, } = useDataContext();
 
-children = [true, true, true];
 const convertBooleanToComponent = (booleanArray) => {
     const mapping = [
       { name: "Summarization", component: () => < Summarization/> },
@@ -19,7 +25,7 @@ const convertBooleanToComponent = (booleanArray) => {
     return booleanArray.map((bool, index) => bool ? mapping[index] : null).filter(Boolean);
   };
   
-  const convertedValues = convertBooleanToComponent(children)
+  const convertedValues = convertBooleanToComponent(selectedPromptValues)
     const styles = {
         border: "1px solid rgba(255, 255, 255, 0.20)",
         backgroundColor: "rgba(255, 255, 255, 0.06)",
