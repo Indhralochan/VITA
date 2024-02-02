@@ -11,7 +11,7 @@ export default function Home() {
     url: '/api/chat',
   });
   return (
-    <div className="flex flex-row mt-2">
+    <div className="flex flex-row mt-2 rounded-lg">
       <div className="w-[30%]"> <MainLeftPanel/></div>
     <main className="flex flex-col items-end w-full h-screen pr-5 justify-center gap-4">
       <ChatBox messages={messages} />

@@ -17,20 +17,20 @@ const Feature = ({ url }) => {
     const [points , setPoints] = React.useState('para');
     
     const fetchData = async () => {
-        // setLoading(true);
-        // try {
-        //     const response = await axios.post('http://localhost:4000/summarize', {
-        //         url: url,
-        //         text: text,
-        //         length: length,
-        //         points: points
-        //     });
-        //     setData(response.data.summary);
-        // } catch (error) {
-        //     console.error('Error fetching data:', error);
-        // } finally {
-        //     setLoading(false);
-        // }
+        setLoading(true);
+        try {
+            const response = await axios.post('http://localhost:4000/summarize', {
+                url: url,
+                text: text,
+                length: length,
+                points: points
+            });
+            setData(response.data.summary);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            setLoading(false);
+        }
         setSummarizedText(text);
     };
 

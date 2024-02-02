@@ -1,7 +1,8 @@
 // app/form.tsx
 
 import React from 'react';
-
+import send from '@/assets/send.svg';
+import Image from 'next/image'
 type FormProps = {
   input: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -12,18 +13,18 @@ export default function Form({ input, onChange, onSubmit }: FormProps) {
   return (
     <div className="w-[90%]">
       <form onSubmit={onSubmit}>
-        <div className="flex gap-4 w-full justify-between">
+        <div className="flex bg-black gap-4 w-full justify-between border-2 rounded-lg border-white">
           <input
             value={input}
             onChange={onChange}
-            className="p-4 bg-black border border-white w-full rounded-lg"
+            className="p-4 bg-black  w-full rounded-lg"
             placeholder="Ask the assistant anything"
           />
           <button
-            className="px-6 py-2 bg-emerald-300 text-black rounded-lg hover:bg-emerald-400"
+            className="px-6 py-2 text-black rounded-lg "
             type="submit"
           >
-            Send
+            <Image src={send} alt="send" />
           </button>
         </div>
       </form>

@@ -93,62 +93,62 @@ const MainCard = () => {
 
     const handleGenerate = () => {
         console.log("Started")
-        // console.log(link)
-        // console.log(selectedPrompts)
-        // console.log(selectedValue)
-        // if (link !== '' && selectedPrompts.length !== 0) {
-        //     axios.post('http://localhost:4000/generate', {
-        //         "link": link,
-        //         "prompt": JSON.stringify(selectedPrompts),
-        //         "format": "video"
-        //     }).then((response) => {
-        //         console.log(response.data);
-        //         const payload = {
-        //             link: link,
-        //             text: response.data.payload.text
-        //         }
-        //         localStorage.setItem('payload', JSON.stringify(payload))
-        //         setUrl(link)
-        //         setText(response.data.payload.text)
-        //         setSelectedPromptValues(selectedPrompts);
-        //         setSelectedValues(selectedValue);
-        //         console.log(response.data.payload.text)
-        //         console.log(text);
-        //         router.push('/summarize')
+        console.log(link)
+        console.log(selectedPrompts)
+        console.log(selectedValue)
+        if (link !== '' && selectedPrompts.length !== 0) {
+            axios.post('http://localhost:4000/generate', {
+                "link": link,
+                "prompt": JSON.stringify(selectedPrompts),
+                "format": "video"
+            }).then((response) => {
+                console.log(response.data);
+                const payload = {
+                    link: link,
+                    text: response.data.payload.text
+                }
+                localStorage.setItem('payload', JSON.stringify(payload))
+                setUrl(link)
+                setText(response.data.payload.text)
+                setSelectedPromptValues(selectedPrompts);
+                setSelectedValues(selectedValue);
+                console.log(response.data.payload.text)
+                console.log(text);
+                router.push('/summarize')
                 
 
-        //     }).catch((error) => {
-        //         console.log(error);
-        //     })
+            }).catch((error) => {
+                console.log(error);
+            })
             console.log("Ended")
             setText("Hello")
             setUrl("Hello")
             setSelectedPromptValues(selectedPrompts);
             setSelectedValues(selectedValue);
             router.push('/summarize');
-        // }
-        // else if (fileUrl !== '' && selectedPrompts.length !== 0) {
-        //     axios.post('http://localhost:4000/generate', {
-        //         "link": fileUrl,
-        //         "prompt": JSON.stringify(selectedPrompts),
-        //         "format": selectedValue
-        //     }).then((response) => {
-        //         console.log(response.data);
-        //         setUrl(link)
-        //         setText(response.data.text)
-        //         setSelectedPromptValues(selectedPrompts);
-        //         setSelectedValues(selectedValue);
-        //         console.log(response.data.text)
+        }
+        else if (fileUrl !== '' && selectedPrompts.length !== 0) {
+            axios.post('http://localhost:4000/generate', {
+                "link": fileUrl,
+                "prompt": JSON.stringify(selectedPrompts),
+                "format": selectedValue
+            }).then((response) => {
+                console.log(response.data);
+                setUrl(link)
+                setText(response.data.text)
+                setSelectedPromptValues(selectedPrompts);
+                setSelectedValues(selectedValue);
+                console.log(response.data.text)
 
-        //         router.push('/summarize')
+                router.push('/summarize')
 
-        //     }).catch((error) => {
-        //         console.log(error);
-        //     })
-        // }
-        // else {
-        //     console.log("Please select a file or enter a link")
-        // }
+            }).catch((error) => {
+                console.log(error);
+            })
+        }
+        else {
+            console.log("Please select a file or enter a link")
+        }
     }
 
 
