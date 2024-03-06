@@ -12,7 +12,7 @@ const Summarization = () => {
         <Video url={url}/>
       </div>
       <div className="w-full flex justify-center pb-10"  style={{marginTop: "-50px"}}>
-    <div className="w-[80%] flex flex-col justify-center items-center" style={{minWidth:"80%"}}>
+    <div className="w-[60%] flex flex-col justify-center items-center" style={{minWidth:"80%"}}>
       <Feature url={url}/>
     </div>
   </div>

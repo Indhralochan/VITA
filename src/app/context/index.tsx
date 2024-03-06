@@ -15,9 +15,9 @@ interface DataContextType {
 }
 
 const defaultValue: DataContextType = {
-  url: '',
+  url: 'asdfadsf',
   setUrl: () => {},
-  text: '',
+  text: `On Air Indias first-ever A350 flight from Bengaluru to Mumbai, the author experienced the new Premium Economy class. Despite bitter coffee, the brand new aircraft impressed with its aesthetics. The uniforms by Manish Malhotra stood out, as did the luxurious business class suites. The author settled into the all-new Premium Economy and enjoyed a refreshing towel and canned orange juice. The in-flight meal was well-plated, featuring fresh fruits, delicious Khuasa, and excellent spinach-stuffed omelettes with sausage. The author eagerly anticipates part 2, where they hope to receive leftover veg breakfast.`,
   setText: () => {},
   summarizedText: '',
   setSummarizedText: () => {},

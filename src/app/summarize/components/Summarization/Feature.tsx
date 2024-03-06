@@ -75,7 +75,7 @@ const Feature = ({ url }) => {
                     </Select>
                 </div>
             </div>
-            <div className="w-full rounded-xl bg-gray-600/25 p-2 ring-1 ring-inset ring-gray-700/10  lg:rounded-2xl lg:p-4 justify-center mt-10" style={{ minHeight: "300px" }}>
+            <div className="w-full rounded-sm bg-gray-600/25 p-2 ring-1 ring-inset ring-gray-700/10  lg:rounded-2xl lg:p-4 justify-center mt-10" style={{ minHeight: "300px" }}>
                 {loading ? "Loading..." : (
                     data ? (
                         <>
@@ -85,7 +85,7 @@ const Feature = ({ url }) => {
                 )}
             </div>
             <div className="mx-auto justify-center ">
-                <Button variant="secondary" className='text-center py-5 mt-10' onClick={fetchData}>
+                <Button variant="secondary" className='text-center py-5 mt-10' onClick={()=>{fetchData}}>
                     Re-Summarize
                 </Button>
             </div>

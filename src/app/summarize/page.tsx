@@ -1,31 +1,68 @@
 "use client";
-import React, { use, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Navbar from '@/components/Navbar'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Summarization from './components/Summarization';
 import ContextAnswering from './components/ContextAnswering';
 import AnswerGeneration from './components/AnswerGeneration';
 import '@/app/style.css';
 import { useRouter } from 'next/navigation'
+import { Tabs } from "./tabs";
 import {  useDataContext } from '@/app/context/index';
-const page = () => {
+const Page = () => {
   const {url, 
     text, 
     summarizedText, setSummarizedText,
     selectedValues, 
     selectedPromptValues, } = useDataContext();
 
-const convertBooleanToComponent = (booleanArray) => {
-    const mapping = [
-      { name: "Summarization", component: () => < Summarization/> },
-      { name: "Context Query", component: () => <ContextAnswering /> },
-      { name: "Answer Generation", component: () => <AnswerGeneration/> }
+    const tabs = [
+      {
+        title: "summarization",
+        value: "summarization",
+        content: (
+          <div className="w-[100%] relative h-[150%] rounded-2xl  text-xl md:text-4xl font-bold text-white maincard">
+            <Summarization />
+          </div>
+        ),
+      },
+      {
+        title: "context answering",
+        value: "context answering",
+        content: (
+          <div className="w-[100%] relative h-[150%] rounded-2xl p-10 text-xl md:text-4xl font-bold text-white maincard">
+            
+            <ContextAnswering />
+          </div>
+        ),
+      },
+      {
+        title: "answer generation",
+        value: "answer generation",
+        content: (
+          <div className="w-[100%] relative h-[150%] rounded-2xl p-10 text-xl md:text-4xl font-bold text-white maincard">
+            <AnswerGeneration />
+          </div>
+        ),
+      }
     ];
-  
-    return booleanArray.map((bool, index) => bool ? mapping[index] : null).filter(Boolean);
-  };
+    
+    const convertBooleanToComponent = (booleanArray:Array<string>) => {
+      let res=[]
+      for(let i=0;i<3;i++){
+        if(booleanArray[i]){
+            res.push(tabs[i]);
+        }
+      }
+      return res;
+    }
+
   
   const convertedValues = convertBooleanToComponent(selectedPromptValues)
+    useEffect(()=>{
+      console.log(convertedValues)
+    },[])
+
     const styles = {
         border: "1px solid rgba(255, 255, 255, 0.20)",
         backgroundColor: "rgba(255, 255, 255, 0.06)",
@@ -37,19 +74,21 @@ const convertBooleanToComponent = (booleanArray) => {
         borderRadius: "20px",
         margin: "auto",
       };
+
+
   return (
     <>
-      <div className="w-full h-screen flex flex-col">
-        <div className="w-full">
+      <div className="w-full flex flex-col justify-center ">
+        <div className="w-full ">
           <Navbar nav={true}/>
-          <div className="w-full h-full flex items-center justify-center relative bg-gradient blur-3xl">
+          {/* <div className="w-full h-full flex items-center justify-center relative bg-gradient blur-3xl"> */}
             <div className="text-start text-4xl text-white z-10 pb-5 font-semibold">
               {/* Your text or content here */}
             </div>
           </div>
         </div>
-        <div className="flex flex-col justify-center align-center mx-auto border-gray-300 border-lg pb-20 " style={{minWidth:"90%"}}>
-        <Tabs defaultValue={convertedValues[0]} className="mt-5" style={styles}>
+        <div className="flex flex-col justify-center align-start mx-auto border-gray-300 border-lg pb-20 " style={{minWidth:"90%"}}>
+        {/* <Tabs defaultValue={activeTab} className="mt-5" style={styles}>
           <TabsList className="flex justify-center">
             {convertedValues.map((tab, index) => (
               <TabsTrigger key={index} value={tab}>{tab.name}</TabsTrigger>
@@ -58,17 +97,20 @@ const convertBooleanToComponent = (booleanArray) => {
           {convertedValues.map((tab, index) => (
             <TabsContent key={index} value={tab}>{tab.component()}</TabsContent>
           ))}
-        </Tabs>
+        </Tabs> */}
+        <div className="h-[70%] md:h-[40rem] [perspective:1000px] relative b flex flex-col mx-auto w-[80%]  items-start justify-start">
+          <Tabs tabs={convertedValues} />
         </div>
-        <div className="w-full h-full flex items-center justify-center relative bg-gradient blur-3xl">
+        </div>
+        {/* <div className="w-full h-full flex items-center justify-center relative bg-gradient blur-3xl"> */}
             <div className="text-start text-4xl text-white z-10 pb-5 font-semibold">
               {/* Your text or content here */}
             </div>
-          </div>
-      </div>
+          {/* </div> */}
+      {/* </div> */}
 
     </>
   )
 }
 
-export default page;
+export default Page;
