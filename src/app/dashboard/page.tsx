@@ -6,6 +6,9 @@ import { auth } from "../../../../VITA/firebase";
 import { TypeAnimation } from 'react-type-animation';
 import '@/app/style.css';
 import MainCard from './components/MainCard';
+import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
+import { IconSquareRoundedX } from "@tabler/icons-react";
+
 const Dashboard = () => {
   const [name, setName] = React.useState<string>("")
 
@@ -17,7 +20,7 @@ const Dashboard = () => {
         console.log(user.displayName);
         const fullName = user.displayName;
         const firstName = fullName?.split(" ")[0];
-        setName(firstName);
+        setName(firstName!);
       } else {
       }
     });
@@ -64,6 +67,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="w-80% flex flex-col justify-center align-center mx-auto border-gray-300 border-lg pb-20">
+          
           <MainCard/>
         </div>
         <div className="w-full h-full flex items-center justify-center relative bg-gradient blur-3xl">

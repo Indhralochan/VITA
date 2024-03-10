@@ -99,7 +99,6 @@
 
 .overlay {
   background: rgba(78, 78, 78, 0);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 10px;
@@ -125,6 +124,11 @@
 .card {
   box-shadow: 0 8px 32px 0 #f37aad;
   animation: changeColor 15s infinite;
+}
+
+.imageCard {
+  animation: changeColor 15s infinite;
+  border-radius: 15px;
 }
 .maincard{
   backdrop-filter: blur(15px) saturate(180%);

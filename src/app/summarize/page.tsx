@@ -30,7 +30,7 @@ const Page = () => {
         title: "context answering",
         value: "context answering",
         content: (
-          <div className="w-[100%] relative h-[150%] rounded-2xl p-10 text-xl md:text-4xl font-bold text-white maincard">
+          <div className="w-[100%] relative h-[150%] rounded-2xl p-10 text-white maincard">
             
             <ContextAnswering />
           </div>
@@ -47,21 +47,6 @@ const Page = () => {
       }
     ];
     
-    const convertBooleanToComponent = (booleanArray:Array<string>) => {
-      let res=[]
-      for(let i=0;i<3;i++){
-        if(booleanArray[i]){
-            res.push(tabs[i]);
-        }
-      }
-      return res;
-    }
-
-  
-  const convertedValues = convertBooleanToComponent(selectedPromptValues)
-    useEffect(()=>{
-      console.log(convertedValues)
-    },[])
 
     const styles = {
         border: "1px solid rgba(255, 255, 255, 0.20)",
@@ -99,7 +84,7 @@ const Page = () => {
           ))}
         </Tabs> */}
         <div className="h-[70%] md:h-[40rem] [perspective:1000px] relative b flex flex-col mx-auto w-[80%]  items-start justify-start">
-          <Tabs tabs={convertedValues} />
+          <Tabs tabs={tabs} />
         </div>
         </div>
         {/* <div className="w-full h-full flex items-center justify-center relative bg-gradient blur-3xl"> */}

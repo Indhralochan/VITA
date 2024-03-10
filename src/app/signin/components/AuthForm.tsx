@@ -6,9 +6,6 @@ import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import Image from "next/image"
-import Link from "next/link"
-import { buttonVariants } from '@/components/ui/button'
 import { getAuth, setPersistence, signInWithEmailAndPassword, browserSessionPersistence, signInWithPopup, GithubAuthProvider} from "firebase/auth";
 import { google_provider } from "../../../../firebase"
 import { useRouter } from 'next/navigation'
@@ -191,7 +188,7 @@ const handleInputChangePass = (value: string) => {
                 <div className="flex flex-col justify-center align-center mx-auto">
                     <div className="pb-3">
                     <p className="justify-center text-center bg-background px-2 text-muted-foreground uppercase text-xs">Not a user?</p></div>
-                    <Button className="px-5" variant='secondary' type="button" disabled={isLoading} onClick={()=>{router.push('/register')}}>SignUp</Button>
+                    <Button className="px-5" variant='secondary' type="button" disabled={isLoading} onClick={()=>{router.push('/register')}}>Sign Up</Button>
                 </div>
             </div>
         </>

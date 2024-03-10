@@ -1,9 +1,9 @@
 import { OpenAIChat } from '@axflow/models/openai/chat';
-import { StreamingJsonResponse } from '@axflow/models/shared';
+import { MessageType, StreamingJsonResponse } from '@axflow/models/shared';
 export const runtime = 'edge';
 
 
-function getLastUserMessageContent(messages) {
+function getLastUserMessageContent(messages:MessageType[]) {
   for (let i = messages.length - 1; i >= 0; i--) {
     if (messages[i].role === "user") {
       return messages[i].content;
@@ -13,8 +13,9 @@ function getLastUserMessageContent(messages) {
 }
 export async function POST(request: Request) {
   const { messages , context} = await request.json();
+  console.log(messages , context);
   let query = getLastUserMessageContent(messages);
-  let combinedContext = messages+context ;
+  let combinedContext = JSON.stringify(messages)+JSON.stringify(context) ;
   const template = `Context information is below.
   ---------------------
   ${combinedContext}

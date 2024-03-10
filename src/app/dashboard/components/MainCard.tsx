@@ -18,44 +18,35 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import axios from "axios";
-import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { db } from "../../../../firebase";
+import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
+import { IconSquareRoundedX } from "@tabler/icons-react";
 import { useRouter } from 'next/navigation'
+import {loadingStates} from '@/util/data'
 import {  useDataContext } from '@/app/context/index';
+
+
 const MainCard = () => {
     const { url, setUrl, text, setText, summarizedText, setSummarizedText, selectedValues, setSelectedValues, selectedPromptValues, setSelectedPromptValues } = useDataContext();
     const prompts = ["Summarization", "Query Response", "Answer generation"];
     const [link, setLink] = useState("");
     const [selectedValue, setSelectedValue] = useState('');
     const [selectedPrompts, setSelectedPrompts] = useState<boolean[]>(new Array(prompts.length).fill(false));
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [fileUrl, SetfileUrl] = useState('');
     const [progress, setProgress] = React.useState(13)
     const router = useRouter();
-    const handleCheckboxChange = (index: number) => {
-        const newSelectedPrompts = [...selectedPrompts];
-        newSelectedPrompts[index] = !newSelectedPrompts[index];
-        setSelectedPrompts(newSelectedPrompts);
-    };
     React.useEffect(() => {
         const timer = setTimeout(() => setProgress(66), 500)
         return () => clearTimeout(timer)
     }, [])
 
-    const handleSelectAll = () => {
-        setSelectedPrompts(new Array(prompts.length).fill(true));
-    };
-
-    const handleUnselectAll = () => {
-        setSelectedPrompts(new Array(prompts.length).fill(false));
-    };
-
-    const handleSelectChange = (event) => {
+    const handleSelectChange = (event: React.SetStateAction<string>) => {
         setSelectedValue(event)
     };
-    const handleFileChange = (file) => {
+    const handleFileChange = (file: string | Blob) => {
         // Check if a file was selected
         if (file) {
             // Log the file information
@@ -87,14 +78,23 @@ const MainCard = () => {
         }
     };
 
-    useEffect(() => {
-        console.log(selectedPrompts);
-    }, [selectedPrompts]);
-
-    const handleGenerate = () => {
+    const handleSummarize = async() => {
+        try {
+            const response = await axios.post('http://localhost:4000/summarize', {
+                url: url,
+                text: text,
+                length: "medium",
+                points: "para"
+            });
+            setSummarizedText(response.data.summary);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+    const handleGenerate = async () => {
+        setLoading(true);
         console.log("Started")
         console.log(link)
-        console.log(selectedPrompts)
         console.log(selectedValue)
         if (link !== '' && selectedPrompts.length !== 0) {
             axios.post('http://localhost:4000/generate', {
@@ -114,9 +114,8 @@ const MainCard = () => {
                 setSelectedValues(selectedValue);
                 console.log(response.data.payload.text)
                 console.log(text);
+                handleSummarize();
                 router.push('/summarize')
-                
-
             }).catch((error) => {
                 console.log(error);
             })
@@ -125,6 +124,7 @@ const MainCard = () => {
             setUrl("Hello")
             setSelectedPromptValues(selectedPrompts);
             setSelectedValues(selectedValue);
+            setLoading(false);
             router.push('/summarize');
         }
         else if (fileUrl !== '' && selectedPrompts.length !== 0) {
@@ -165,7 +165,7 @@ const MainCard = () => {
 
     return (
         <>
-            <Card className='maincard w-[650px] ' style={styles}>
+            <Card className='maincard w-[650px] card' style={styles}>
                 <CardHeader>
                     {/* <CardTitle className='text-2xl'>Enter Details Below to get Started!</CardTitle> */}
                     <CardDescription>
@@ -195,7 +195,7 @@ const MainCard = () => {
                                                 <div className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</div>
                                                 <div className="text-xs text-gray-500 dark:text-gray-400">mp4,mpeg,mp3 Etc (MAX. 10MB file)</div>
                                             </div>
-                                            <input id="dropzone-file" type="file" className="hidden" onChange={(e) => handleFileChange(e.target.files[0])} />
+                                            <input id="dropzone-file" type="file" className="hidden" onChange={(e) => handleFileChange(e.target.files![0])} />
                                         </label>
                                     </div>
                                     {/* <div className="mt-1">
@@ -218,56 +218,6 @@ const MainCard = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="rounded-sm mt-5 pl-10">
-                            {prompts.map((prompt, index: number) => (
-                                <div className="flex items-center space-x-2 border-1 border-gray-300 pb-3" key={index}>
-                                    <input
-                                        type="checkbox"
-                                        id={`prompt-${index}`}
-                                        checked={selectedPrompts[index]} // Use the state value to determine the checked state
-                                        onChange={() => handleCheckboxChange(index)}
-                                    />
-                                    <label
-                                        htmlFor={`prompt-${index}`}
-                                        className={`text-sm font-medium leading-none ${selectedPrompts[index] ? '' : 'peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                                            }`}
-                                    >
-                                        <span>{prompt}</span>
-                                    </label>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="flex flex-row">
-                            <div className="flex flex-row mx-auto">
-                                <div className="flex items-center space-x-2 border-1 border-gray-300 pb-3 pr-3">
-                                    <input
-                                        type="checkbox"
-                                        id="selectAll"
-                                        onChange={handleSelectAll}
-                                        checked={selectedPrompts.every((prompt) => prompt)} // Check if all prompts are selected
-                                    />
-                                    <label
-                                        htmlFor="selectAll"
-                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                    >
-                                        Select All
-                                    </label>
-                                </div>
-                                <div className="flex items-center space-x-2 border-1 border-gray-300 pb-3" onChange={handleUnselectAll}>
-                                    <input
-                                        type="checkbox"
-                                        id="unselectAll"
-                                        checked={!selectedPrompts.some((prompt) => prompt)} // Check if no prompts are selected
-                                    />
-                                    <label
-                                        htmlFor="unselectAll"
-                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                    >
-                                        Unselect All
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </CardContent>
                 <CardFooter>
@@ -276,6 +226,15 @@ const MainCard = () => {
                     </div>
                 </CardFooter>
             </Card>
+            <Loader loadingStates={loadingStates} loading={loading} duration={2000} />
+            {loading && (
+        <button
+          className="fixed top-4 right-4 text-black dark:text-white z-[120]"
+          onClick={() => setLoading(false)}
+        >
+          <IconSquareRoundedX className="h-10 w-10" />
+        </button>
+      )}
         </>
     )
 }

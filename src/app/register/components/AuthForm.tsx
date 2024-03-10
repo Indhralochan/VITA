@@ -216,7 +216,7 @@ const handleInputChangePass = (value: string) => {
                 </div>
                 <div className="flex flex-col justify-center align-center mx-auto py-3">
                     <p className="justify-center text-center">Already a user?</p>
-                    <Button className="px-5" variant="outline" type="button" disabled={isLoading} onClick={()=>{router.push('/signin')}}>SignIn</Button>
+                    <Button className="px-5" variant="outline" type="button" disabled={isLoading} onClick={()=>{router.push('/signin')}}>Sign In</Button>
                 </div>
             </div>
             

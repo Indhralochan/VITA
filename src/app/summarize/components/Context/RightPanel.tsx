@@ -10,8 +10,8 @@ export default function ChatBox({ messages }: { messages: MessageType[] }) {
               key={message.id}
               className={
                 message.role === 'user'
-                  ? 'self-start text-black bg-white p-2 rounded mr-32'
-                  : 'self-end text-black bg-emerald-200 p-2 rounded ml-32'
+                  ? 'self-start text-black bg-white p-3 rounded-2xl mr-32'
+                  : 'self-end text-black rounded-2xl bg-[#17C4E1] p-3 rounded ml-25 mr-10'
               }
             >
               {message.content}
