@@ -72,7 +72,6 @@ const MainCard = () => {
             console.error('Error fetching data:', error)
         }
     }
-
     const handleSummarize = async() => {
         try {
             const response = await axios.post('http://localhost:4000/summarize', {
@@ -115,8 +114,8 @@ const MainCard = () => {
             })
             setSelectedPromptValues(selectedPrompts);
             setSelectedValues(selectedValue);
-            setLoading(false);
-            router.push('/summarize');
+            // router.push('/summarize');
+            setTimeout(()=>{router.push('/summarize')},2000);
         }
         else if (fileUrl !== '' && selectedPrompts.length !== 0) {
             axios.post('http://localhost:4000/generate', {
@@ -130,18 +129,15 @@ const MainCard = () => {
                 setSelectedPromptValues(selectedPrompts);
                 setSelectedValues(selectedValue);
                 console.log(response.data.text)
-
                 router.push('/summarize')
-
             }).catch((error) => {
                 console.log(error);
             })
-        setLoading(true);
-
         }
         else {
             console.log("Please select a file or enter a link")
         }
+        setLoading(false);
     }
 
 
