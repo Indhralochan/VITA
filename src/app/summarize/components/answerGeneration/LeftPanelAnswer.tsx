@@ -11,7 +11,9 @@ const LeftPanel = () => {
       const docsSnapshot = await getDocs(q);
       
       docsSnapshot.forEach((doc)=>{
+        if(doc.id === id){
           questionList.push({id:doc.id,data:doc.data()})
+        }
       })
       console.log(questionList)
     setData(questionList);

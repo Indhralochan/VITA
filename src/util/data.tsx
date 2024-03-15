@@ -1,5 +1,8 @@
 import Image from "next/image";
-import img from '@/assets/blob.png'
+import img from '@/assets/summarization.jpg'
+import img1 from '@/assets/contextanswering.jpg'
+import img2 from '@/assets/answergeneration.jpg'
+import img3 from '@/assets/22445014_2112.w037.n003.68B.p1.68.jpg'
 export const content = [
     {
       title: "Collaborative Editing",
@@ -83,7 +86,7 @@ export const dummy = [
     ),
     badge: "Changelog",
     image:
-    img,
+    img1,
   },
   {
     title: "Video Answer Generation",
@@ -99,7 +102,7 @@ export const dummy = [
     ),
     badge: "Launch Week",
     image:
-    img,
+    img3,
   },
 ];
 

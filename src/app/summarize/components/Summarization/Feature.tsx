@@ -9,10 +9,10 @@ import {
 } from "@/components/ui/select"
 import { Button } from '@/components/ui/button';
 import { useDataContext } from '@/app/context/index';
-const Feature = ({ url }) => {
-    const [data, setData] = React.useState(null);
+const Feature = ({ url }:{url:string}) => {
+    const [data, setData] = React.useState("");
     const [loading, setLoading] = React.useState(false);
-    const { text , setSummarizedText} = useDataContext();
+    const { text , summarizedText, setSummarizedText} = useDataContext();
     const [length , setLength] = React.useState('short');
     const [points , setPoints] = React.useState('para');
     
@@ -26,20 +26,22 @@ const Feature = ({ url }) => {
                 points: points
             });
             setData(response.data.summary);
+            setSummarizedText(response.data.summary)
         } catch (error) {
             console.error('Error fetching data:', error);
         } finally {
             setLoading(false);
         }
-        setSummarizedText(text);
     };
 
     React.useEffect(() => {
-        fetchData();
+        console.log(summarizedText)
+        if(summarizedText===""){
+            fetchData(); 
+        }else{
+            setData(summarizedText);
+        }
     }, [url]);
-    React.useEffect(() => {
-        text
-    } , [text])
 
     const handleLengthChange = (e:string) => {
         console.log(e)
@@ -52,9 +54,9 @@ const Feature = ({ url }) => {
 
     return (
         <>
-            <div className="flex flex-row justify-center">
+            <div className="flex flex-row justify-center ">
                 <Select defaultValue="short" onValueChange={(e) => { handleLengthChange(e) }}>
-                    <SelectTrigger className="w-[180px]">
+                    <SelectTrigger className="w-[130px] bg-black">
                         <SelectValue placeholder="Short" />
                     </SelectTrigger>
                     <SelectContent>
@@ -65,7 +67,7 @@ const Feature = ({ url }) => {
                 </Select>
                 <div className="pl-10">
                     <Select defaultValue="para" onValueChange={(e) => { handlePointsChange(e) }} >
-                        <SelectTrigger className="w-[180px]">
+                        <SelectTrigger className="w-[130px] bg-black">
                             <SelectValue  placeholder="Points" />
                         </SelectTrigger>
                         <SelectContent  >
@@ -74,8 +76,11 @@ const Feature = ({ url }) => {
                         </SelectContent>
                     </Select>
                 </div>
+                <Button variant="secondary" className='text-center ml-10 bg-black p-3 w-[130px] cursor-pointer' onClick={()=>{fetchData()}}>
+                    Re-Summarize
+                </Button>
             </div>
-            <div className="w-full rounded-sm bg-gray-600/25 p-2 ring-1 ring-inset ring-gray-700/10  lg:rounded-2xl lg:p-4 justify-center mt-10" style={{ minHeight: "300px" }}>
+            <div className="w-full rounded-sm bg-gray-600/25 p-2 ring-1 ring-inset ring-gray-700/10 lg:p-4 justify-center mt-10 text-lg font-thin" style={{ minHeight: "300px" }}>
                 {loading ? "Loading..." : (
                     data ? (
                         <>
@@ -83,11 +88,6 @@ const Feature = ({ url }) => {
                         </>
                     ) : "Data not available"
                 )}
-            </div>
-            <div className="mx-auto justify-center ">
-                <Button variant="secondary" className='text-center py-5 mt-10' onClick={()=>{fetchData}}>
-                    Re-Summarize
-                </Button>
             </div>
         </>
     );

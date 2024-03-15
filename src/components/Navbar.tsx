@@ -7,7 +7,7 @@ import { url } from "inspector";
 import Image from 'next/image'
 import logo from '../../src/assets/navbar.svg'
 import { useRouter } from 'next/navigation'
-export default function Navbar({nav}) {
+export default function Navbar({nav}:{nav:any}) {
   const router = useRouter()
   return (
     <nav className="sticky h-14 inset-x-0 top-0 z-30 w-full border-b border-gray-600/50 backdrop-blur-2xl transition-all text-white" >
