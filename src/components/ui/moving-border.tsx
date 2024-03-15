@@ -30,9 +30,9 @@ export function Button({
   [key: string]: any;
 }) {
   return (
-    <Component
+    <button
       className={cn(
-        "bg-transparent relative text-xl  h-12 w-40 p-[1px] overflow-hidden ",
+        "bg-transparent relative text-xl  h-12 w-40 p-[1px] overflow-hidden cursor-pointer",
         containerClassName
       )}
       style={{
@@ -65,7 +65,7 @@ export function Button({
       >
         {children}
       </div>
-    </Component>
+    </button>
   );
 }
 

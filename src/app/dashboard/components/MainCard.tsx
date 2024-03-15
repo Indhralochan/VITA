@@ -20,12 +20,13 @@ import {
 import axios from "axios";
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
-import { db } from "../../../../firebase";
+import { db, storage } from "../../../../firebase";
 import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
 import { IconSquareRoundedX } from "@tabler/icons-react";
 import { useRouter } from 'next/navigation'
 import {loadingStates} from '@/util/data'
 import {  useDataContext } from '@/app/context/index';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 
 const MainCard = () => {
@@ -46,37 +47,31 @@ const MainCard = () => {
     const handleSelectChange = (event: React.SetStateAction<string>) => {
         setSelectedValue(event)
     };
-    const handleFileChange = (file: string | Blob) => {
-        // Check if a file was selected
+    const handleFileChange = async (file: Blob | Uint8Array | ArrayBuffer ,) => {
+        crypto
         if (file) {
-            // Log the file information
-            setLoading(true);
-            console.log('Selected file:', file);
-
-            // Perform further actions such as uploading the file, processing it, etc.
-            // Example: Upload the file using Axios
-            const formData = new FormData();
-            formData.append('file', file);
-
-            axios.post('http://localhost:4000/upload', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
-                .then((response) => {
-                    console.log('File uploaded successfully:', response.data);
-                    console.log(response.data.filePath);
-                    SetfileUrl(response.data.filePath)
-                    setUrl(response.data.filePath)
-                    setLoading(false);
-                })
-                .catch((error) => {
-                    console.error('Error uploading file:', error);
-                });
+            const id = crypto.randomUUID();
+            const storageRef = ref(storage, `$videos/${id}`);
+            const uploadTask = uploadBytes(storageRef, file);
+            await uploadTask;
+            const downloadURL = await getDownloadURL(storageRef);
+            SetfileUrl(downloadURL);
         } else {
             console.log('No file selected.');
         }
     };
+
+    const handleVideoContext = async()=>{
+        try{
+            if(fileUrl){
+            const response = await axios.get(`http://127.0.0.1:5000/context?url=${fileUrl}`);
+            setSelectedValue(response.data);
+            }
+        }
+        catch(error){
+            console.error('Error fetching data:', error)
+        }
+    }
 
     const handleSummarize = async() => {
         try {
@@ -112,16 +107,12 @@ const MainCard = () => {
                 setText(response.data.payload.text)
                 setSelectedPromptValues(selectedPrompts);
                 setSelectedValues(selectedValue);
-                console.log(response.data.payload.text)
-                console.log(text);
                 handleSummarize();
+                handleVideoContext();
                 router.push('/summarize')
             }).catch((error) => {
                 console.log(error);
             })
-            console.log("Ended")
-            setText("Hello")
-            setUrl("Hello")
             setSelectedPromptValues(selectedPrompts);
             setSelectedValues(selectedValue);
             setLoading(false);
@@ -145,6 +136,8 @@ const MainCard = () => {
             }).catch((error) => {
                 console.log(error);
             })
+        setLoading(true);
+
         }
         else {
             console.log("Please select a file or enter a link")

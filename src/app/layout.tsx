@@ -4,7 +4,7 @@ import './globals.css'
 import { DataContextProvider } from '@/app/context/index';
 import { ThemeProvider } from "@/components/theme-provider"
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }: any) {
   return (
     <>
       <html lang="en" suppressHydrationWarning>
