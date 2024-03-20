@@ -7,8 +7,8 @@ const Summarization = () => {
   const {url} = useDataContext();
   return (
     <>
-    <div className="w-full flex flex-col justify-center align-center mb-10">
-      <div className="w-[80%] flex  justify-center mx-auto mt-10">
+    <div className="w-full flex flex-col justify-center align-center mb-10 ">
+      <div className="w-[80%] flex  justify-center mx-auto mt-10 ">
         <Video url={url}/>
       </div>
       <div className="w-full flex justify-center pb-10"  style={{marginTop: "-50px"}}>

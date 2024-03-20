@@ -42,7 +42,7 @@ const Feature = ({ url }:{url:string}) => {
             setData(summarizedText);
         }
     }, [url]);
-
+    
     const handleLengthChange = (e:string) => {
         console.log(e)
             setLength(e);

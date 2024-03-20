@@ -35,18 +35,15 @@ const MainCard = () => {
     const [link, setLink] = useState("");
     const [selectedValue, setSelectedValue] = useState('');
     const [selectedPrompts, setSelectedPrompts] = useState<boolean[]>(new Array(prompts.length).fill(false));
-    const [loading, setLoading] = useState(false);
+    const [loaderOpen , setLoaderOpen] = useState(false);
     const [fileUrl, SetfileUrl] = useState('');
     const [progress, setProgress] = React.useState(13)
     const router = useRouter();
-    React.useEffect(() => {
-        const timer = setTimeout(() => setProgress(66), 500)
-        return () => clearTimeout(timer)
-    }, [])
 
     const handleSelectChange = (event: React.SetStateAction<string>) => {
         setSelectedValue(event)
     };
+
     const handleFileChange = async (file: Blob | Uint8Array | ArrayBuffer ,) => {
         crypto
         if (file) {
@@ -73,76 +70,62 @@ const MainCard = () => {
         }
     }
 
-    const handleSummarize = async() => {
-        try {
-            const response = await axios.post('http://localhost:4000/summarize', {
-                url: url,
-                text: text,
-                length: "medium",
-                points: "para"
-            });
-            setSummarizedText(response.data.summary);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    }
     const handleGenerate = async () => {
-        setLoading(true);
-        console.log("Started")
-        console.log(link)
-        console.log(selectedValue)
-        if (link !== '' && selectedPrompts.length !== 0) {
-            axios.post('http://localhost:4000/generate', {
-                "link": link,
-                "prompt": JSON.stringify(selectedPrompts),
-                "format": "video"
-            }).then((response) => {
-                console.log(response.data);
-                const payload = {
-                    link: link,
-                    text: response.data.payload.text
-                }
-                localStorage.setItem('payload', JSON.stringify(payload))
-                setUrl(link)
-                setText(response.data.payload.text)
-                setSelectedPromptValues(selectedPrompts);
-                setSelectedValues(selectedValue);
-                handleSummarize();
-                handleVideoContext();
-                router.push('/summarize')
-            }).catch((error) => {
-                console.log(error);
-            })
-            setSelectedPromptValues(selectedPrompts);
-            setSelectedValues(selectedValue);
-            setLoading(false);
-            router.push('/summarize');
-        }
-        else if (fileUrl !== '' && selectedPrompts.length !== 0) {
-            axios.post('http://localhost:4000/generate', {
-                "link": fileUrl,
-                "prompt": JSON.stringify(selectedPrompts),
-                "format": selectedValue
-            }).then((response) => {
-                console.log(response.data);
-                setUrl(link)
-                setText(response.data.text)
-                setSelectedPromptValues(selectedPrompts);
-                setSelectedValues(selectedValue);
-                console.log(response.data.text)
-
-                router.push('/summarize')
-
-            }).catch((error) => {
-                console.log(error);
-            })
-        setLoading(true);
-
-        }
-        else {
-            console.log("Please select a file or enter a link")
-        }
-    }
+        console.log("Started");
+        console.log(link);
+        console.log(selectedValue);
+        setLoaderOpen(true);
+    
+        setTimeout(() => {
+            if (link !== '' && selectedPrompts.length !== 0) {
+                axios.post('http://localhost:4000/generate', {
+                    "link": link,
+                    "prompt": JSON.stringify(selectedPrompts),
+                    "format": "video"
+                }).then((response) => {
+                    console.log(response.data);
+                    const payload = {
+                        link: link,
+                        text: response.data.payload.text
+                    };
+                    localStorage.setItem('payload', JSON.stringify(payload));
+                    setUrl(link);
+                    setText(response.data.payload.text);
+                    setSelectedPromptValues(selectedPrompts);
+                    setSelectedValues(selectedValue);
+                    handleVideoContext();
+                    router.push('/summarize');
+                }).catch((error) => {
+                    console.log(error);
+                }).finally(() => {
+                    setLoaderOpen(false);
+                });
+            } else if (fileUrl !== '' && selectedPrompts.length !== 0) {
+                axios.post('http://localhost:4000/generate', {
+                    "link": fileUrl,
+                    "prompt": JSON.stringify(selectedPrompts),
+                    "format": selectedValue
+                }).then((response) => {
+                    console.log(response.data);
+                    setUrl(link);
+                    setText(response.data.text);
+                    setSelectedPromptValues(selectedPrompts);
+                    setSelectedValues(selectedValue);
+                    setTimeout(() => {
+                        router.push('/summarize'); // Navigate to the desired page
+                    }, 2000); // Navigate after 2 seconds
+                }).catch((error) => {
+                    console.log(error);
+                }).finally(() => {
+                    setLoaderOpen(false);
+                });
+            } else {
+                console.log("Please select a file or enter a link");
+                setLoaderOpen(false); // Close the loader if no action is taken
+            }
+        }, 4000); // Run this block after 4 seconds
+    };
+    
 
 
     const styles = {
@@ -152,9 +135,8 @@ const MainCard = () => {
         overflow: "hidden",
     };
     useEffect(() => {
-        console.log(selectedValue);
-        console.log(link)
-    }, [selectedValue, link]);
+        console.log(loaderOpen);
+    }, [loaderOpen]);
 
     return (
         <>
@@ -219,11 +201,12 @@ const MainCard = () => {
                     </div>
                 </CardFooter>
             </Card>
-            <Loader loadingStates={loadingStates} loading={loading} duration={2000} />
-            {loading && (
+            <Loader loadingStates={loadingStates} loading={loaderOpen} duration={2000} />
+
+            {loaderOpen && (
         <button
           className="fixed top-4 right-4 text-black dark:text-white z-[120]"
-          onClick={() => setLoading(false)}
+          onClick={() => setLoaderOpen(false)}
         >
           <IconSquareRoundedX className="h-10 w-10" />
         </button>
