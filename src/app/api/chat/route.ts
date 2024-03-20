@@ -16,11 +16,13 @@ export async function POST(request: Request) {
   console.log(messages , context);
   let query = getLastUserMessageContent(messages);
   let combinedContext = JSON.stringify(messages)+JSON.stringify(context) ;
+  const key = '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';
+  console.log(key);
   const template = `Context information is below.
   ---------------------
   ${combinedContext}
   ---------------------
-  Given the context information and not prior knowledge, answer the question: ${query}
+  Given the context information if context information is relevant to the query answer the question based on context otherwise generate a normal answer. answer the question: ${query}
   `;
   const stream = await OpenAIChat.streamTokens(
     {
@@ -28,7 +30,7 @@ export async function POST(request: Request) {
       messages: [{ role: 'user', content: template}],
     },
     {
-      apiKey: process.env.OPENAI_API_KEY!,
+      apiKey: key,
     }
   );
   return new StreamingJsonResponse(stream);

@@ -14,7 +14,7 @@ export default function Navbar({nav}:{nav:any}) {
       <div >
         <div className="flex h-14 items-center justify-between">
           <Link href={"/"} className="flex font-semibold justify-center">
-            <span className="text-2xl ml-10">Vita</span>
+            <span className="text-2xl ml-10">VITA</span>
           </Link>
           <div className="hidden items-center space-x-12 sm:flex md:pr-40 pr-20">
             <>

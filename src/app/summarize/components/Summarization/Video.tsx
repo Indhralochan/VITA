@@ -4,7 +4,7 @@ const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
 export default function Video({url}:{url:string}) {
   return (
-    <div className="relative isolate">
+    <div className="relative isolate ">
       <div>
         <div className="mx-auto max-w-6xl px-6 lg:px-8 mb-28 flex items-center justify-center">
           <div className="mt-5 flow-root">
