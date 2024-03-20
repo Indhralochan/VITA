@@ -16,7 +16,7 @@ export async function POST(request: Request) {
   console.log(messages , context);
   let query = getLastUserMessageContent(messages);
   let combinedContext = JSON.stringify(messages)+JSON.stringify(context) ;
-  const key = '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';
+  const key = process.env.OPENAI_API_KEY;
   console.log(key);
   const template = `Context information is below.
   ---------------------
