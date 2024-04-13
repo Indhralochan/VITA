@@ -7,11 +7,11 @@ import { useDataContext } from '@/app/context';
 import { motion } from "framer-motion";
 import { LampContainer } from '@/components/ui/lamp';
 export default function Home() {
-  const {text}= useDataContext();
+  const {text, selectedValues}= useDataContext();
   const { input, messages, onChange, onSubmit } = useChat({
     url: '/api/chat',
     body: {
-      context: text,
+      context: text+selectedValues,
     },
   });
   return (
@@ -25,7 +25,7 @@ export default function Home() {
           duration: 0.8,
           ease: "easeInOut",
         }}
-        className="py-4 w-[1100px] bg-clip-text text-center font-medium tracking-tight text-transparent"
+        className="py-4 w-[1000px] bg-clip-text text-center font-medium tracking-tight text-transparent"
       >
         <div className="flex flex-col items-center w-full mt-10 h-screen pr-5 justify-center gap-4 mt-10">
       <ChatBox messages={messages} />

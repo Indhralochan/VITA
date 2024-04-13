@@ -60,8 +60,8 @@ const MainCard = () => {
 
     const handleVideoContext = async()=>{
         try{
-            if(fileUrl){
-            const response = await axios.get(`http://127.0.0.1:5000/context?url=${fileUrl}`);
+            if(link){
+            const response = await axios.get(`http://127.0.0.1:5000/context?url=${link}`);
             setSelectedValue(response.data);
             }
         }
@@ -92,7 +92,6 @@ const MainCard = () => {
                     setUrl(link);
                     setText(response.data.payload.text);
                     setSelectedPromptValues(selectedPrompts);
-                    setSelectedValues(selectedValue);
                     handleVideoContext();
                     router.push('/summarize');
                 }).catch((error) => {
@@ -121,9 +120,9 @@ const MainCard = () => {
                 });
             } else {
                 console.log("Please select a file or enter a link");
-                setLoaderOpen(false); // Close the loader if no action is taken
+                setLoaderOpen(false);
             }
-        }, 4000); // Run this block after 4 seconds
+        }, 4000);
     };
     
 
@@ -201,7 +200,7 @@ const MainCard = () => {
                     </div>
                 </CardFooter>
             </Card>
-            <Loader loadingStates={loadingStates} loading={loaderOpen} duration={2000} />
+            <Loader loadingStates={loadingStates} loading={loaderOpen} duration={2800} />
 
             {loaderOpen && (
         <button

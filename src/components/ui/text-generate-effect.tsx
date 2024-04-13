@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { motion, stagger, useAnimate } from "framer-motion";
 import { cn } from "@/util/cn";
-
+import ReactMarkdown from "react-markdown";
 export const TextGenerateEffect = ({
   words,
   className,

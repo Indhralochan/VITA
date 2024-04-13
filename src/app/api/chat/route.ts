@@ -13,7 +13,7 @@ function getLastUserMessageContent(messages:MessageType[]) {
 }
 export async function POST(request: Request) {
   const { messages , context} = await request.json();
-  console.log(messages , context);
+  console.log(context + "asldfjkajsdfhkadfs");
   let query = getLastUserMessageContent(messages);
   let combinedContext = JSON.stringify(messages)+JSON.stringify(context) ;
   const key = process.env.OPENAI_API_KEY;
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
   ---------------------
   ${combinedContext}
   ---------------------
-  Given the context information if context information is relevant to the query answer the question based on context otherwise generate a normal answer. answer the question: ${query}
+  Given the context information and not prior knowledge, strictly answer the question: ${query} if no relevant context found respond with no context found.
   `;
   const stream = await OpenAIChat.streamTokens(
     {
