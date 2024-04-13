@@ -2,7 +2,7 @@
 import React, { use, useEffect } from 'react'
 import Navbar from '@/components/Navbar'
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../../../VITA/firebase";
+import { auth } from "../../../firebase";
 import { TypeAnimation } from 'react-type-animation';
 import '@/app/style.css';
 import MainCard from './components/MainCard';
